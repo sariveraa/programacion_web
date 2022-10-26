@@ -15,7 +15,8 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = Producto::all();
-        return view('gestionProductos',compact('productos'));
+        return view('index')->with('productos', $productos);
+
     }
 
     /**
@@ -25,7 +26,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        return view('gestionProductos');
     }
 
     /**
@@ -45,7 +46,7 @@ class ProductoController extends Controller
         $producto->precio = $precio;
         $producto->descripcion = $descripcion;
         $producto->save();
-        return view('gestionProductos');
+        return redirect()->route('producto.index');
 
     }
 
@@ -91,6 +92,8 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->delete();
+        return redirect()->route('producto.index');
     }
 }
